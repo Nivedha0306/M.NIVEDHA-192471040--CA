@@ -1,0 +1,74 @@
+clc;
+clear;
+close all;
+
+%% TIME DATA
+
+t = 0:1:100;
+
+%% SIMULATED PERFORMANCE DATA
+
+Throughput = 112.45 + 6*randn(size(t));
+Throughput = max(100,min(125,Throughput));
+
+Delay = 32.16 + 5*randn(size(t));
+Delay = max(20,min(50,Delay));
+
+PDR = 96.78 + 1.2*randn(size(t));
+PDR = max(92,min(100,PDR));
+
+Jitter = 4.87 + 1.1*randn(size(t));
+Jitter = max(2,min(10,Jitter));
+
+%% GRAPH 1 - THROUGHPUT
+
+figure;
+
+plot(t,Throughput,'LineWidth',1.5);
+
+xlabel('Time (s)');
+ylabel('Throughput (Mbps)');
+title('Throughput over Time');
+
+grid on;
+
+
+%% GRAPH 2 - END-TO-END DELAY
+
+figure;
+
+plot(t,Delay,'LineWidth',1.5);
+
+xlabel('Time (s)');
+ylabel('Delay (ms)');
+title('End-to-End Delay over Time');
+
+grid on;
+
+
+%% GRAPH 3 - PACKET DELIVERY RATIO
+
+figure;
+
+plot(t,PDR,'LineWidth',1.5);
+
+xlabel('Time (s)');
+ylabel('PDR (%)');
+title('Packet Delivery Ratio over Time');
+
+ylim([80 100]);
+grid on;
+
+
+%% GRAPH 4 - JITTER
+
+figure;
+
+plot(t,Jitter,'LineWidth',1.5);
+
+xlabel('Time (s)');
+ylabel('Jitter (ms)');
+title('Jitter over Time');
+
+ylim([0 15]);
+grid on;
