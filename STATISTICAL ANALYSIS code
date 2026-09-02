@@ -1,0 +1,122 @@
+clc;
+clear;
+close all;
+
+%% EXPERIMENTAL DATA
+
+Throughput = [
+    98.73 105.21 110.45 112.34 114.52 ...
+    116.73 118.21 120.35 124.67 103.25
+    ];
+
+PDR = [
+    92.11 94.25 95.36 96.42 97.15 ...
+    98.12 99.48 97.21 96.55 96.13
+    ];
+
+Delay = [
+    22.41 25.36 28.52 30.12 32.16 ...
+    34.25 36.42 38.51 40.63 43.27
+    ];
+
+Jitter = [
+    2.31 3.12 3.87 4.21 4.87 ...
+    5.25 5.81 6.21 6.72 7.12
+    ];
+
+PacketLoss = [
+    0.32 0.51 0.68 0.91 1.24 ...
+    1.35 1.62 1.78 1.95 2.11
+    ];
+
+
+%% STATISTICAL CALCULATIONS
+
+Parameter = {
+    'Throughput (Mbps)'
+    'PDR (%)'
+    'Delay (ms)'
+    'Jitter (ms)'
+    'Packet Loss (%)'
+    };
+
+Mean = [
+    mean(Throughput)
+    mean(PDR)
+    mean(Delay)
+    mean(Jitter)
+    mean(PacketLoss)
+    ];
+
+StdDev = [
+    std(Throughput)
+    std(PDR)
+    std(Delay)
+    std(Jitter)
+    std(PacketLoss)
+    ];
+
+Minimum = [
+    min(Throughput)
+    min(PDR)
+    min(Delay)
+    min(Jitter)
+    min(PacketLoss)
+    ];
+
+Maximum = [
+    max(Throughput)
+    max(PDR)
+    max(Delay)
+    max(Jitter)
+    max(PacketLoss)
+    ];
+
+
+%% CREATE TABLE
+
+T = table(Parameter,Mean,StdDev,Minimum,Maximum);
+
+fprintf('\n================================================\n');
+fprintf('              STATISTICAL ANALYSIS\n');
+fprintf('================================================\n');
+
+disp(T);
+
+
+%% DELAY DISTRIBUTION
+
+figure;
+
+histogram(Delay);
+
+xlabel('Delay (ms)');
+ylabel('Frequency');
+
+title('Distribution of Delay (ms)');
+
+grid on;
+
+
+%% 95% CONFIDENCE INTERVAL
+
+CI = 1.96 * std(Delay) / sqrt(length(Delay));
+
+LowerCI = mean(Delay) - CI;
+UpperCI = mean(Delay) + CI;
+
+fprintf('\n95%% Confidence Interval for Delay:\n');
+fprintf('Lower Limit = %.2f ms\n',LowerCI);
+fprintf('Upper Limit = %.2f ms\n',UpperCI);
+
+
+%% THROUGHPUT CONFIDENCE INTERVAL
+
+CI2 = 1.96 * std(Throughput) / sqrt(length(Throughput));
+
+LowerCI2 = mean(Throughput) - CI2;
+UpperCI2 = mean(Throughput) + CI2;
+
+fprintf('\n95%% Confidence Interval for Throughput:\n');
+fprintf('Lower Limit = %.2f Mbps\n',LowerCI2);
+fprintf('Upper Limit = %.2f Mbps\n',UpperCI2);
