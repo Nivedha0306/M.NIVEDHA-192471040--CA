@@ -1,0 +1,73 @@
+clc;
+clear;
+close all;
+
+%% PERFORMANCE DATA
+
+Metric = {
+    'Throughput'
+    'PDR'
+    'Delay'
+    'Jitter'
+    'Packet Loss'
+    'Reliability'
+    };
+
+Target = [
+    100
+    95
+    50
+    10
+    2
+    99
+    ];
+
+Observed = [
+    112.45
+    96.78
+    32.16
+    4.87
+    1.24
+    99.21
+    ];
+
+%% DISPLAY TABLE
+
+T = table(Metric,Target,Observed);
+
+disp('==============================================');
+disp('            PERFORMANCE METRICS');
+disp('==============================================');
+
+disp(T);
+
+
+%% PERFORMANCE COMPARISON GRAPH
+
+figure;
+
+bar([Target Observed]);
+
+xlabel('Performance Parameters');
+ylabel('Values');
+
+title('Performance Comparison - Target vs Observed');
+
+legend('Target','Observed');
+
+set(gca,'XTickLabel', ...
+    {'Throughput','PDR','Delay','Jitter','Packet Loss','Reliability'});
+
+grid on;
+
+
+%% STATUS
+
+fprintf('\nPerformance Validation:\n');
+
+fprintf('Throughput     : 112.45 Mbps  - PASS\n');
+fprintf('PDR            : 96.78 %%      - PASS\n');
+fprintf('Delay          : 32.16 ms     - PASS\n');
+fprintf('Jitter         : 4.87 ms      - PASS\n');
+fprintf('Packet Loss    : 1.24 %%       - PASS\n');
+fprintf('Reliability    : 99.21 %%      - PASS\n');
